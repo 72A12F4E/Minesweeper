@@ -85,6 +85,10 @@ class Minesweeper: ObservableObject {
         
         gameState = .playing
         
+        cancellables.forEach {
+            $0.cancel()
+        }
+
         time = 0
         Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
@@ -130,9 +134,6 @@ class Minesweeper: ObservableObject {
     private func checkForWin() {
         if board.allSatisfy({ $0.allSatisfy { $0.isRevealed || ($0.isFlagged && $0.contents == .mine) } }) {
             gameState = .won
-            cancellables.forEach {
-                $0.cancel()
-            }
         }
     }
     
