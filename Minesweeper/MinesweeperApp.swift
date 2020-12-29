@@ -12,7 +12,6 @@ struct MinesweeperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(Minesweeper())
         }
     }
 }

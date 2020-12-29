@@ -6,101 +6,66 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     
-    @EnvironmentObject
-    var minesweeper: Minesweeper
+    @State var widthText: String = "8"
+    @State var heightText: String = "12"
+    @State var minesText: String = "10"
+    
+    private var width: Int {
+        Int(widthText) ?? 8
+    }
+    
+    private var height: Int {
+        Int(heightText) ?? 12
+    }
+    
+    private var mines: Int {
+        Int(minesText) ?? 10
+    }
     
     var body: some View {
         NavigationView {
-            VStack {
-                VStack {
-                    if minesweeper.gameState == .lost {
-                        Text("You Lose!")
-                    } else if minesweeper.gameState == .won {
-                        Text("You Win! Congrats!")
-                    } else {
-                        Text("Happy Hunting!")
-                    }
-                    Text("\(minesweeper.time)")
-                    Button("Reset") {
-                        minesweeper.reset()
-                    }
-                }
-                HStack(spacing: 1) {
-                    ForEach(0..<minesweeper.board.count) { row in
-                        VStack(spacing: 1) {
-                            ForEach(0..<minesweeper.board[row].count) { column in
-                                makeSquare(
-                                    row: row,
-                                    column: column
-                                ).aspectRatio(1, contentMode: .fit)
+            Form {
+                Section {
+                    /// TODO: extract to extension/viewmodifier to get rid of duplication
+                    TextField("Width", text: $widthText)
+                        .onReceive(Just(widthText)) { newValue in
+                            let filtered = newValue.filter { "0123456789".contains($0) }
+                            if filtered != newValue {
+                                self.widthText = filtered
                             }
                         }
-                    }
+                    TextField("Height", text: $heightText)
+                        .onReceive(Just(heightText)) { newValue in
+                            let filtered = newValue.filter { "0123456789".contains($0) }
+                            if filtered != newValue {
+                                self.heightText = filtered
+                            }
+                        }
+                    TextField("Mines", text: $minesText)
+                        .onReceive(Just(minesText)) { newValue in
+                            let filtered = newValue.filter { "0123456789".contains($0) }
+                            if filtered != newValue {
+                                self.minesText = filtered
+                            }
+                        }
                 }
-                .frame(maxWidth: .infinity)
-                .padding(4)
-            }.navigationTitle("Minesweeper")
-        }
-    }
-    
-    @ViewBuilder
-    func makeSquare(row: Int, column: Int) -> some View {
-        let square = minesweeper.board[row][column]
-        if square.isRevealed {
-            ZStack {
-                Rectangle()
-                    .foregroundColor(.gray)
-                if square.contents == .mine {
-                    Circle()
-                        .foregroundColor(.red)
-                        .padding(1)
-                } else {
-                    if square.neighboringMines != 0 {
-                        Text("\(square.neighboringMines)")
-                            .font(.title)
-                            .foregroundColor(textColor(for: square.neighboringMines))
-                    }
-                }
+                
+                NavigationLink(
+                    "Start Game",
+                    destination: MinesweeperView(
+                        minesweeper: Minesweeper(
+                            width: width,
+                            height: height,
+                            mines: mines
+                        )
+                    )
+                )
             }
-        } else if square.isFlagged {
-            Rectangle()
-                .foregroundColor(.orange)
-                .onLongPressGesture {
-                    minesweeper.flag(x: row, y: column)
-                }
-        } else {
-            Rectangle()
-                .foregroundColor(.green)
-                .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
-                    minesweeper.reveal(x: row, y: column)
-                })
-                .onLongPressGesture {
-                    minesweeper.flag(x: row, y: column)
-                }
+            .navigationTitle("Minesweeper")
         }
-    }
-    
-    func textColor(for count: Int) -> Color {
-        switch count {
-        case 1: return Color(red: 0 / 255, green: 24 / 255, blue: 244 / 255)
-        case 2: return Color(red: 55 / 255, green: 125 / 255, blue: 34 / 255)
-        case 3: return Color(red: 186 / 255, green: 40 / 255, blue: 28 / 255)
-        case 4: return Color(red: 0 / 255, green: 4 / 255, blue: 71 / 255)
-        case 5: return Color(red: 118 / 255, green: 21 / 255, blue: 14 / 255)
-        case 6: return Color(red: 54 / 255, green: 126 / 255, blue: 128 / 255)
-        case 7: return .black
-        case 8: return .gray
-        default: return .clear
-        }
-    }
-}
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

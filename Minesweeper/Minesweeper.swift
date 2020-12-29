@@ -28,22 +28,25 @@ struct Square {
 
 class Minesweeper: ObservableObject {
     //TODO: Make these more difficult
-    private var mines = 10
-    private var width: Int = 8
-    private var height: Int = 12
+    let width: Int
+    let height: Int
+    let mines: Int
     
     @Published
-    var gameState: GameState = .playing
+    private(set) var gameState: GameState = .playing
     
     @Published
-    var board: [[Square]] = []
+    private(set) var board: [[Square]] = []
     
     @Published
-    var time: Int = 0
+    private(set) var time: Int = 0
     
     private var cancellables: Set<AnyCancellable> = []
     
-    init() {
+    init(width: Int, height: Int, mines: Int) {
+        self.width = width
+        self.height = height
+        self.mines = mines
         setup()
     }
     
@@ -134,6 +137,7 @@ class Minesweeper: ObservableObject {
     private func checkForWin() {
         if board.allSatisfy({ $0.allSatisfy { $0.isRevealed || ($0.isFlagged && $0.contents == .mine) } }) {
             gameState = .won
+            cancellables.forEach { $0.cancel() }
         }
     }
     

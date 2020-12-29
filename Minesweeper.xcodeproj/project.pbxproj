@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25BB1729259ACDD800AC0678 /* MinesweeperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BB1728259ACDD800AC0678 /* MinesweeperView.swift */; };
 		25F7D9462593266400BB2F44 /* MinesweeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F7D9452593266400BB2F44 /* MinesweeperApp.swift */; };
 		25F7D9482593266400BB2F44 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F7D9472593266400BB2F44 /* ContentView.swift */; };
 		25F7D94A2593266600BB2F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25F7D9492593266600BB2F44 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25BB1728259ACDD800AC0678 /* MinesweeperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinesweeperView.swift; sourceTree = "<group>"; };
 		25F7D9422593266400BB2F44 /* Minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25F7D9452593266400BB2F44 /* MinesweeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinesweeperApp.swift; sourceTree = "<group>"; };
 		25F7D9472593266400BB2F44 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				25F7D9452593266400BB2F44 /* MinesweeperApp.swift */,
 				25F7D9472593266400BB2F44 /* ContentView.swift */,
+				25BB1728259ACDD800AC0678 /* MinesweeperView.swift */,
 				25F7D9552593267D00BB2F44 /* Minesweeper.swift */,
 				25F7D9492593266600BB2F44 /* Assets.xcassets */,
 				25F7D94E2593266600BB2F44 /* Info.plist */,
@@ -144,6 +147,7 @@
 				25F7D9562593267D00BB2F44 /* Minesweeper.swift in Sources */,
 				25F7D9482593266400BB2F44 /* ContentView.swift in Sources */,
 				25F7D9462593266400BB2F44 /* MinesweeperApp.swift in Sources */,
+				25BB1729259ACDD800AC0678 /* MinesweeperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
