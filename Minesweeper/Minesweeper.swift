@@ -113,6 +113,14 @@ class Minesweeper: ObservableObject {
         board[x][y].isRevealed = true
         
         if board[x][y].contents == .mine {
+            // Reveal all the mines on the board when you lose
+            for x in 0..<board.count {
+                for y in 0..<board[x].count {
+                    if board[x][y].contents == .mine {
+                        board[x][y].isRevealed = true
+                    }
+                }
+            }
             gameState = .lost
             cancellables.forEach { $0.cancel() }
             return
